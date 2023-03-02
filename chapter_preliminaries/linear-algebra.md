@@ -526,6 +526,10 @@ A.shape, tf.reduce_sum(A)
 A.shape, A.sum()
 ```
 
+v5-p2-f1-c8 如果沿着轴0求和，那么求和之后，矩阵从5X4变为1X4
+
+
+
 默认情况下，调用求和函数会沿所有的轴降低张量的维度，使它变为一个标量。
 我们还可以[**指定张量沿哪一个轴来通过求和降低维度**]。
 以矩阵为例，为了通过求和所有行的元素来降维（轴0），可以在调用函数时指定`axis=0`。
@@ -554,6 +558,10 @@ A_sum_axis0 = A.sum(axis=0)
 A_sum_axis0, A_sum_axis0.shape
 ```
 
+
+v5-p2-f1-c9 沿着轴1进行求和，矩阵从5X4变为5维向量，规律就是沿着哪个轴求和，那个轴就“消失”了
+
+
 指定`axis=1`将通过汇总所有列的元素降维（轴1）。因此，输入轴1的维数在输出形状中消失。
 
 ```{.python .input}
@@ -579,6 +587,9 @@ A_sum_axis1 = A.sum(axis=1)
 A_sum_axis1, A_sum_axis1.shape
 ```
 
+v5-p2-f1-c10 如果沿着两个轴求和，那么5X4的矩阵会变成1维向量，也就是标量
+
+
 沿着行和列对矩阵求和，等价于对矩阵的所有元素进行求和。
 
 ```{.python .input}
@@ -599,6 +610,11 @@ tf.reduce_sum(A, axis=[0, 1])  # 结果和tf.reduce_sum(A)相同
 #@tab paddle
 A.sum(axis=[0, 1])
 ```
+
+
+v5-p2-f1-c11 A.mean()是求矩阵中的平均值，是矩阵总和/矩阵的元素个数，等价于A.sum() / A.size
+
+
 
 [**一个与求和相关的量是*平均值*（mean或average）**]。
 我们通过将总和除以元素总数来计算平均值。
@@ -622,6 +638,9 @@ tf.reduce_mean(A), tf.reduce_sum(A) / tf.size(A).numpy()
 #@tab paddle
 A.mean(), A.sum() / A.numel()
 ```
+
+v5-p2-f1-c12 计算平均值也可以沿着某个轴，原理和求和差不多，例如5X4矩阵沿着轴0求均值，结果是4维的向量
+
 
 同样，计算平均值的函数也可以沿指定轴降低张量的维度。
 
@@ -648,6 +667,9 @@ A.mean(axis=0), A.sum(axis=0) / A.shape[0]
 
 :label:`subseq_lin-alg-non-reduction`
 
+v5-p2-f1-c13 如果要保持轴不变，那么需要传入额外的参数keepdims=True，这时候5X4的矩阵沿着轴1求和会变成5X1的矩阵
+
+
 但是，有时在调用函数来[**计算总和或均值时保持轴数不变**]会很有用。
 
 ```{.python .input}
@@ -673,6 +695,10 @@ sum_A = paddle.sum(A, axis=1, keepdim=True)
 sum_A
 ```
 
+v5-p2-f1-c14 因为sum_A是5X1的矩阵，A是5X4的矩阵，所以两个矩阵可以运算，sum_A在轴1发生了广播
+
+
+
 例如，由于`sum_A`在对每行进行求和后仍保持两个轴，我们可以(**通过广播将`A`除以`sum_A`**)。
 
 ```{.python .input}
@@ -693,6 +719,10 @@ A / sum_A
 #@tab paddle
 A / sum_A
 ```
+
+v5-p2-f1-c15 可以沿着某个轴求累加和，矩阵的形状不变
+
+
 
 如果我们想沿[**某个轴计算`A`元素的累积总和**]，
 比如`axis=0`（按行计算），可以调用`cumsum`函数。
