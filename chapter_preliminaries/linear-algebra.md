@@ -749,6 +749,8 @@ A.cumsum(axis=0)
 
 ## 点积（Dot Product）
 
+v5-p2-f1-c16 向量的点积就是对应位置的元素相乘，并将结果累加起来
+
 我们已经学习了按元素操作、求和及平均值。
 另一个最基本的操作之一是点积。
 给定两个向量$\mathbf{x},\mathbf{y}\in\mathbb{R}^d$，
@@ -811,6 +813,11 @@ $\mathbf{x}$中的值根据权重$\mathbf{w}$的加权和，
 点积表示*加权平均*（weighted average）。
 将两个向量规范化得到单位长度后，点积表示它们夹角的余弦。
 本节后面的内容将正式介绍*长度*（length）的概念。
+
+
+
+
+v5-p2-f1-c17 矩阵和向量的乘法
 
 ## 矩阵-向量积
 
@@ -887,6 +894,8 @@ A.shape, x.shape, tf.linalg.matvec(A, x)
 #@tab paddle
 A.shape, x.shape, paddle.mv(A, x)
 ```
+
+v5-p2-f1-c18 矩阵和矩阵的乘法
 
 ## 矩阵-矩阵乘法
 
@@ -970,6 +979,9 @@ paddle.mm(A, B)
 
 矩阵-矩阵乘法可以简单地称为**矩阵乘法**，不应与"Hadamard积"混淆。
 
+
+
+
 ## 范数
 :label:`subsec_lin-algebra-norms`
 
@@ -1004,6 +1016,9 @@ $$\forall i, [\mathbf{x}]_i = 0 \Leftrightarrow f(\mathbf{x})=0.$$
 
 (**$$\|\mathbf{x}\|_2 = \sqrt{\sum_{i=1}^n x_i^2},$$**)
 
+
+v5-p2-f1-c19 L2范数是针对向量的，就是各个元素的平方和，开根号
+
 其中，在$L_2$范数中常常省略下标$2$，也就是说$\|\mathbf{x}\|$等同于$\|\mathbf{x}\|_2$。
 在代码中，我们可以按如下方式计算向量的$L_2$范数。
 
@@ -1036,6 +1051,8 @@ paddle.norm(u)
 
 与$L_2$范数相比，$L_1$范数受异常值的影响较小。
 为了计算$L_1$范数，我们将绝对值函数和按元素求和组合起来。
+
+v5-p2-f1-c20 L1范数是针对向量的，就是每个元素的绝对值之和
 
 ```{.python .input}
 np.abs(u).sum()
@@ -1085,6 +1102,8 @@ tf.norm(tf.ones((4, 9)))
 #@tab paddle
 paddle.norm(paddle.ones(shape=[4, 9], dtype='float32'))
 ```
+
+v5-p2-f1-c21 范数原来是一种衡量优化的结果，针对向量或者矩阵
 
 ### 范数和目标
 
